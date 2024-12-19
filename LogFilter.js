@@ -95,7 +95,7 @@
 	filterContainer.setAttribute('id', 'filterContainer')
 
 	filterContainer.appendChild(createLabel(`Filter ${ logType === 'history' ? 'users' : 'titles' }: `, 'filterInput'))
-	filterContainer.appendChild(createInput('text', 'filterInput', 50))
+	filterContainer.appendChild(createInput('text', 'filterInput', 30))
 	filterContainer.appendChild(createInput('checkbox', 'excludeToggle'))
 	filterContainer.appendChild(createLabel('Exclude', 'excludeToggle'))
 
