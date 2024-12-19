@@ -12,30 +12,55 @@
 	document.head.appendChild(style)
 
 	style.sheet.insertRule(`
-	#filterContainer {
-		width: fit-content;
-		padding-inline: 1em;
-		padding-block: 0.5em;
-		margin-block: 0.5em;
-		border-radius: 0.25em;
-		outline-width: 2px;
-		outline-style: solid;
-		outline-color: #0c69;
-		background-color: #cfb;
-
-		&.excludeToggled {
-			outline-color: #f009;
-			background-color: #faa;
+		@media (max-width: 500px) {
+			#filterContainer {
+				font-size: 0.9em;
+			}
 		}
+	`)
 
-		label::selection {
-			background-color: transparent;
-		}
+	style.sheet.insertRule(`
+		#filterContainer {
+			display: flex;
+			flex-wrap: wrap;
+			column-gap: 0.5em;
+			width: fit-content;
+			padding-inline: 1em;
+			padding-block: 0.5em;
+			margin-block: 0.5em;
+			border-radius: 0.25em;
+			outline-width: 2px;
+			outline-style: solid;
+			outline-color: #0c69;
+			outline-offset: -2px;
+			background-color: #cfb;
 
-		input[type="checkbox"] {
-			margin-inline: 0.5em;
+			&.excludeToggled {
+				outline-color: #f009;
+				background-color: #faa;
+			}
+
+			label::selection {
+				background-color: transparent;
+			}
+
+			& > label {
+				font-weight: bold;
+			}
+
+			div:first-of-type {
+				flex-grow: 1;
+
+				input {
+					width: calc(100% - 0.5em);
+				}
+			}
+
+			#excludeToggle {
+				margin-inline-end: 0.5em;
+			}
 		}
-	}`)
+	`)
 
 	function filterItems (filterString) {
 		document.querySelectorAll(listSelector).forEach(list => {
@@ -93,11 +118,16 @@
 
 	const filterContainer = document.createElement('div')
 	filterContainer.setAttribute('id', 'filterContainer')
-
 	filterContainer.appendChild(createLabel(`Filter ${ logType === 'history' ? 'users' : 'titles' }: `, 'filterInput'))
-	filterContainer.appendChild(createInput('text', 'filterInput', 30))
-	filterContainer.appendChild(createInput('checkbox', 'excludeToggle'))
-	filterContainer.appendChild(createLabel('Exclude', 'excludeToggle'))
+
+	const filterFieldContainer = document.createElement('div')
+	filterFieldContainer.appendChild(createInput('text', 'filterInput', 30))
+	filterContainer.appendChild(filterFieldContainer)
+
+	const excludeToggleContainer = document.createElement('div')
+	excludeToggleContainer.appendChild(createInput('checkbox', 'excludeToggle'))
+	excludeToggleContainer.appendChild(createLabel('Exclude', 'excludeToggle'))
+	filterContainer.appendChild(excludeToggleContainer)
 
 	let parentNode = document.querySelector('#mw-content-text')
 
