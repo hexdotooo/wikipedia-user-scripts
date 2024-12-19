@@ -5,7 +5,7 @@
 (function() {
 
 	if (!document.URL.match(
-		new RegExp('(?:Special(?::|%3A)(?:Contributions|Log|WhatLinksHere)|action=history)'))
+		new RegExp('(?:Special(?::|%3A)(?:(?:Deleted)?Contributions|Log|WhatLinksHere)|action=history)'))
 	) return
 
 	const style = document.createElement('style')
@@ -86,10 +86,10 @@
 
 	let logType
 
-	if (document.URL.match('Special(?::|%3A)Contributions')) logType = 'contribs'
-	if (document.URL.match('action=history'))                logType = 'history'
-	if (document.URL.match('Special(?::|%3A)Log'))           logType = 'log'
-	if (document.URL.match('Special(?::|%3A)WhatLinksHere')) logType = 'links'
+	if (document.URL.match('Special(?::|%3A)(?:Deleted)?Contributions')) logType = 'contribs'
+	if (document.URL.match('action=history'))                            logType = 'history'
+	if (document.URL.match('Special(?::|%3A)Log'))                       logType = 'log'
+	if (document.URL.match('Special(?::|%3A)WhatLinksHere'))             logType = 'links'
 
 	const filterContainer = document.createElement('div')
 	filterContainer.setAttribute('id', 'filterContainer')
